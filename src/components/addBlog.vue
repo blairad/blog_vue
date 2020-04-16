@@ -1,37 +1,47 @@
 <template>
   <div id="add-blog">
     <h2>Add a new blog post</h2>
-    <form>
+
+    <form v-if="!submitted">
       <label>Blog Title:</label>
       <input type="text" v-model.lazy="blog.title" required />
       <label>Blog Content:</label>
       <textarea v-model.lazy="blog.content"></textarea>
       <div id="checkboxes">
         <label>Ninjas</label>
-          <input type="checkbox" value="ninjas" v-model="blog.categories">
-          <!-- blog.categories is attaching the checkbox to the data below -->
+        <input type="checkbox" value="ninjas" v-model="blog.categories" />
+        <!-- blog.categories is attaching the checkbox to the data below -->
         <label>Non-Ninjas</label>
-          <input type="checkbox" value="non-ninjas" v-model="blog.categories">
+        <input type="checkbox" value="non-ninjas" v-model="blog.categories" />
         <label>Vue</label>
-          <input type="checkbox" value="vue" v-model="blog.categories">
+        <input type="checkbox" value="vue" v-model="blog.categories" />
         <label>React</label>
-          <input type="checkbox" value="react" v-model="blog.categories">
+        <input type="checkbox" value="react" v-model="blog.categories" />
       </div>
 
       <label>Author:</label>
       <select v-model="blog.author">
-        <option v-for="author in authors" v-bind:key="author.id">{{ author }}</option>
+        <option v-for="author in authors" v-bind:key="author.id">{{
+          author
+        }}</option>
       </select>
+      <button @click.prevent="post">Add Blog</button>
+      <!-- .prevent is to prevent the default behaviour of the button -->
+      <div v-if="submitted">
+        <h3>Thanks for adding post</h3>
+      </div>
     </form>
 
     <div id="preview">
       <h3>Preview blog:</h3>
       <p>Blog title: {{ blog.title }}</p>
-      <p>Blog content: </p>
+      <p>Blog content:</p>
       <p>{{ blog.content }}</p>
       <p>Blog Categories:</p>
       <ul>
-        <li v-for="category in blog.categories" v-bind:key="category.id">{{ category }}</li>
+        <li v-for="category in blog.categories" v-bind:key="category.id">
+          {{ category }}
+        </li>
       </ul>
       <p>Author: {{ blog.author }}</p>
     </div>
@@ -39,6 +49,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -46,12 +58,25 @@ export default {
         title: "",
         content: "",
         categories: [],
-        author: ''
+        author: ""
       },
-      authors: ['the net ninja', 'sarah drasner', 'evan you', 'zuc']
+      authors: ["the net ninja", "sarah drasner", "evan you", "zuc"],
+      submitted: false
     };
   },
-  methods: {}
+  methods: {
+    post() {
+      axios.post("https://jsonplaceholder.typicode.com/posts", {
+        title: this.blog.title,
+        body: this.blog.content,
+        userId: "Axios!"
+      })
+      .then(data => {
+          console.log(data);
+          this.submitted = true;
+        });
+    }
+  }
 };
 </script>
 
