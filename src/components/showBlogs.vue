@@ -1,7 +1,8 @@
 <template> 
   <div v-theme:column="'narrow'" id="show-blogs">
     <h1>All blog articles</h1>
-    <div v-for="blog in blogs" v-bind:key="blog.id" class="single-blog">
+    <input type="text" v-model="search" placeholder="search blogs">
+    <div v-for="blog in filteredBlogs" v-bind:key="blog.id" class="single-blog">
         <h2 v-rainbow>{{ blog.title | to-uppercase }}</h2>
         <article>{{ blog.body | snippet }}</article>
     </div>
@@ -14,7 +15,8 @@ import axios from "axios";
 export default {
   data () {
     return {
-      blogs: []
+      blogs: [],
+      search: ''
     }
   },
   methods: {
@@ -26,8 +28,15 @@ export default {
              //access the reponse(data) object
               this.blogs = response.data.slice(0, 10);
           });
-
+  },
+  computed: {
+    filteredBlogs: function() {
+      return this.blogs.filter((blog) => {
+        return blog.title.match(this.search)
+      });
+    }
   }
+
 }
 </script>
 
