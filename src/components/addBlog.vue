@@ -21,9 +21,7 @@
 
       <label>Author:</label>
       <select v-model="blog.author">
-        <option v-for="author in authors" v-bind:key="author.id">{{
-          author
-        }}</option>
+        <option v-for="author in authors" v-bind:key="author.id">{{author}}</option>
       </select>
       <button @click.prevent="post">Add Blog</button>
       <!-- .prevent is to prevent the default behaviour of the button -->
