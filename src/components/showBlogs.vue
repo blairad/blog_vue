@@ -35,6 +35,20 @@ export default {
         return blog.title.match(this.search)
       });
     }
+  },
+  // filter local
+  filters: {
+    toUppercase(value) {
+      return value.toUpperCase();
+    }
+  },
+  // custome directive local
+  directives: {
+    'rainbow': {
+      bind(el, binding, vnode) {
+        el.style.color = "#" + Math.random().toString().slice(2,8)
+      }
+    }
   }
 
 }

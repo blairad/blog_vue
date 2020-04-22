@@ -4,13 +4,13 @@ import axios from 'axios'
 
 Vue.prototype.$http = axios;
 
-//custom directive
+//custom directive - global
 
-Vue.directive('rainbow', {
-  bind(el, binding, vnode){
-    el.style.color = "#" + Math.random().toString().slice(2,8)
-  }
-})
+// Vue.directive('rainbow', {
+//   bind(el, binding, vnode){
+//     el.style.color = "#" + Math.random().toString().slice(2,8)
+//   }
+// })
 
 Vue.directive('theme', {
   bind(el, binding, vnode){
@@ -25,11 +25,13 @@ Vue.directive('theme', {
     }
   }
 })
-// filters
-Vue.filter('to-uppercase', (value)=> {
-  //value refers to the data that we use the filter on ie blog.title
-  return value.toUpperCase()
-})
+
+// // filters - global
+
+// Vue.filter('to-uppercase', (value)=> {
+//   //value refers to the data that we use the filter on ie blog.title
+//   return value.toUpperCase()
+// })
 
 Vue.filter('snippet', (value) => {
   return value.slice(0, 100) + '...' // this cuts the number of characters to 100 and adds ... to the end. this works as the value.slice is a string
