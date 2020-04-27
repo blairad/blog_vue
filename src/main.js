@@ -8,7 +8,8 @@ Vue.prototype.$http = axios;
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  routes: Routes
+  routes: Routes,
+  mode: 'history' // history so that you can got to /add to add new blog rather than /#/add
 })
 
 //custom directive - global
