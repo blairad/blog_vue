@@ -64,11 +64,7 @@ export default {
   },
   methods: {
     post() {
-      axios.post("https://jsonplaceholder.typicode.com/posts", {
-        title: this.blog.title,
-        body: this.blog.content,
-        userId: "Axios!"
-      })
+      axios.post("https://net-ninja-blog-5d20d.firebaseio.com/posts.json", this.blog)
       .then(data => {
           console.log(data);
           this.submitted = true;
